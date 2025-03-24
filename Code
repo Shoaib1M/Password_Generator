@@ -1,0 +1,57 @@
+import random
+import string
+
+def password_generator(min_length, numbers=True, special_chars=True):
+    #Initializing subsets for alphabets,digits and special characters
+    letters = string.ascii_letters
+    digits = string.digits
+    special = string.punctuation
+    #creating the main subset as per the question
+    allowed_chars = letters
+    if numbers:
+        allowed_chars += digits
+    if special_chars:
+        allowed_chars += special
+
+    password = []
+    #Introducing a remaining variable to ensure that the user defined conditions get satisfied
+    remaining=0
+    if numbers :
+        remaining-=1
+    if special_chars:
+        remaining-=1
+    remaining_length = min_length - remaining
+    if remaining_length < 0:
+        remaining_length = 0
+
+    if numbers:
+        password.append(random.choice(digits))
+    if special_chars:
+        password.append(random.choice(special))
+    #finally, appending the remaining elements
+    for i in range(remaining_length):
+        password.append(random.choice(allowed_chars))
+
+    random.shuffle(password)
+
+    return ''.join(password)
+#taking user input for password generation
+while True:
+    try:
+        user_defined_length = int(input("Enter the length of password (minimum 1): "))
+        if user_defined_length < 1:
+            print("Length must be at least 1.")
+            continue
+        break
+    except ValueError:
+        print("Please enter a valid integer.")
+
+user_defined_number = input("Do you want your password to have numbers (y/n)? ").lower() == 'y'
+user_defined_special_char = input("Do you want your password to have special characters (y/n)? ").lower() == 'y'
+
+password = password_generator(user_defined_length, user_defined_number, user_defined_special_char)
+#printing the password
+if user_defined_length==1:
+    print(f"Your generated password is: {password[0]}")
+else:
+    print(f"Your generated password is: {password}")
