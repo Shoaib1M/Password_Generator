@@ -20,7 +20,7 @@ def password_generator(min_length, numbers=True, special_chars=True):
         remaining-=1
     if special_chars:
         remaining-=1
-    remaining_length = min_length - remaining
+    remaining_length = min_length + remaining
     if remaining_length < 0:
         remaining_length = 0
 
